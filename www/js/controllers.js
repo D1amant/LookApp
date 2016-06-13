@@ -67,9 +67,18 @@ modle.controller('HomeCtrl' , function ($scope, $ionicModal, $timeout, $state) {
 });
 
 
-modle.controller('CadastreCtrl' , function ($scope, $ionicModal, $timeout, $state) {
-  // body...
-});
+modle.controller('CadastreCtrl' ,  function ($scope) {
+    var phone = $scope.phone;
+    $scope.list = [];
+    $scope.cadastre = [];
+    $scope.submit = function(cadastre)
+    {
+      //alert($scope.phone);
+      $scope.list.push(cadastre.phone);
+   };
+  }
+ 
+);
 
 
 modle.controller('PlaylistsCtrl', function($scope) {

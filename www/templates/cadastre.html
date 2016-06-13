@@ -1,33 +1,36 @@
-<ion-view view-title="Reservas" ng-controller ='CadastreCtrl'>
+<ion-view view-title="Reservas" >
  <ion-header-bar class="bar bar-positive">
     <button class="button button-clear button-primary" ng-click="$ionicGoBack()"><i class = "ion-chevron-left"></i></button>
      <h1 class="title">Cadastro Usuario </h1>
    
     </ion-header-bar>
+    <form ng-submit="submit(cadastre)" ng-controller ="CadastreCtrl">
 	<ion-content>
 
 		<div class="list">
 			<label class="item item-input">
-				<input type="text" name ='name' id='name' placeholder="Nome">
+				<input type="text" name ='name' placeholder="Nome" />
 			</label>
 
 
 			<label class="item item-input">
-				<input type="text" name ='email' id='email' placeholder="Email">
+				<input type="text" name ='email'  placeholder="Email" />
 			</label>
 
 			<label class="item item-input">
-				<input type="text" name ='phone' id='phone' placeholder="Telefone">
+				<input type="text" name ='phone'  placeholder="Telefone" ng-model="cadastre.phone"/>
 			</label>
+
+			{{list}}
 		</div>
 	</div>
 	
 
 </ion-content>
 <div class="bar bar-footer bar-positive"">
-	  <div class="title" ng-click="openModal()">Salvar</div>
-	
+		<input type="submit" name="Salvar">
 	<div>
+	</form>
 <script id="my-modal.html" type="text/ng-template">
   <ion-modal-view>
     <ion-header-bar class="bar bar-positive">
