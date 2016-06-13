@@ -41,8 +41,37 @@ modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state) {
   };
 });
 modle.controller('MenuCtrl' , function ($scope, $ionicModal, $timeout, $state) {
+   // Perform the login action when the user submits the login form
+  $scope.openReserve = function($scope) {
+  
+    $state.go("menu.reserve"); 
+   
+  };
+});
+modle.controller('ReserveCtrl' , function ($scope, $ionicModal, $timeout, $state) {
+   // Perform the login action when the user submits the login form
+  $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  
+      $scope.openModal = function() {
+         $scope.modal.show();
+   };
+});
+
+modle.controller('HomeCtrl' , function ($scope, $ionicModal, $timeout, $state) {
   // body...
 });
+
+
+modle.controller('CadastreCtrl' , function ($scope, $ionicModal, $timeout, $state) {
+  // body...
+});
+
+
 modle.controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
     { title: 'Reggae', id: 1 },

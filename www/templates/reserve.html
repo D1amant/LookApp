@@ -1,0 +1,55 @@
+<ion-view view-title="Reservas" ng-controller ='ReserveCtrl'>
+	<ion-content>
+		<div class= 'info-reserve'>
+			<h3>Nome do Estabelecimento</h3>	
+			<i class = 'ion-ios-home-outline'></i>
+			Rua Waldomiro de sousa , 64<br/> 
+			<i class = 'ion-ios-location-outline'></i>		
+			51- 3333-3333 		
+		</div>	
+		<div class="list">
+			
+			<label class="item item-input">
+				<input type="date" name ='date' id='date' placeholder="Data">
+			</label>
+			<label class="item item-input">
+				<input type="time" name ='time' id='time' placeholder="hora">
+			</label>
+
+ 		<label class="item item-input item-select">
+ 		   <div class="input-label">
+ 		     Serviço
+ 		   </div>
+ 		   <select>
+				<option>Corte Maquina</option>
+				<option>Corte Tesoura</option>
+				<option>Progreciva</option>
+				<option>Manicure</option>
+		 	</select>
+ 		 </label>
+		</div>
+	</div>
+
+
+</ion-content>
+	<div class="bar bar-footer bar-positive"">
+	  <div class="title" ng-click="openModal()">Salvar</div>
+	
+	<div>
+<script id="my-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-positive">
+     <h1 class="title">Parabéns </h1>
+    <button class="button button-clear button-primary" ng-click="modal.hide()">Ok</button>
+   
+    </ion-header-bar>
+    <ion-content>
+    <br/>
+    <br/>
+
+       <h1 class="title">Dados Salvos com Sucesso </h1>
+    </ion-content>
+  </ion-modal-view>
+</script>
+</ion-view>
+

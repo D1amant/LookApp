@@ -12,3 +12,21 @@
 	margin-top: 20%;
 	margin-left: 20%;
 }
+
+.info-reserve{
+	margin-top: 10px;
+	margin-bottom: 30px;
+	margin-left: 5%;
+	color:#616161;
+	
+}
+
+.info-reserve h3 {
+	color: #387ef5;
+	font-weight: bold;
+}
+
+
+.link{
+	color:#387ef5;
+}

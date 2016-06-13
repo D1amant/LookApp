@@ -27,7 +27,7 @@ app.run(function($ionicPlatform) {
 app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: false,
     templateUrl: 'templates/login.html',
@@ -41,6 +41,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'MenuCtrl'
   })
 
+    .state('cadastre', {
+    url: '/cadastre',
+    abstract: false,
+    templateUrl: 'templates/cadastre.html',
+    controller: 'CadastreCtrl'
+  })
+
   .state('menu.search', {
     url: '/search',
     views: {
@@ -50,7 +57,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     }
   })
 
-    .state('menu.home', {
+ .state('menu.home', {
     url: '/home',
     views: {
       'menuContent': {
@@ -58,6 +65,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
       }
     }
   })
+
+ .state('menu.reserve', {
+    url: '/reserve',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/reserve.html'
+      }
+    }
+  })
+
+
 
   .state('app.browse', {
       url: '/browse',

@@ -1,8 +1,8 @@
 <ion-view view-title="DayStudio">
-	<ion-content>
-<div class="list card">
-  <div class="item item-body">
-    <img class="full-image" src="assets/img/salo-de-beleza-do-hairdressing-16167187.jpg" width="400px" height="200px">
+	<ion-content  ng-controler='HomeCtrl'>
+<div class="list card" ng-click="openReserve()" >
+  <div class="item item-body" ng-click="openReserve()">
+    <img  ng-click="openReserve()" class="full-image" src="assets/img/salo-de-beleza-do-hairdressing-16167187.jpg" width="400px" height="200px">
      <p><b><h2>Studio Fashion</h2></b><p>
     <p>
       This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
@@ -13,7 +13,7 @@
 
 </div>
 
-<div class="list card">
+<div class="list card" ng-click="openReserve()">
   <div class="item item-body">
     <img class="full-image" src="assets/img/salo-de-beleza-do-hairdressing-16167187.jpg" width="400px" height="200px">
      <p><b><h2>Studio Fashion</h2></b><p>
