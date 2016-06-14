@@ -8,27 +8,32 @@
 	<ion-content>
 
 		<div class="list">
-			<label class="item item-input">
-				<input type="text" name ='name' placeholder="Nome" />
+			<label style="{{styleInputName}}" class="item item-input">
+				<input type="text" name ='name' placeholder="Nome" ng-model="cadastre.name" />
 			</label>
 
 
-			<label class="item item-input">
-				<input type="text" name ='email'  placeholder="Email" />
+			<label style="{{styleInputEmail}}" class="item item-input">
+				<input type="email" name ='email'  placeholder="Email" ng-model="cadastre.email" />
 			</label>
 
-			<label class="item item-input">
-				<input type="text" name ='phone'  placeholder="Telefone" ng-model="cadastre.phone"/>
+			<label style="{{styleInputPhone}}" class="item item-input">
+				<input type="tel" name ='phone'  placeholder="Telefone" ng-model="cadastre.phone"/>
 			</label>
 
-			{{list}}
+			<label style="{{styleInputPassword}}" class="item item-input">
+				<input type="password" name ='password'  placeholder="Senha"  ng-model="cadastre.password"/>
+			</label>
+
+
+	
 		</div>
 	</div>
 	
 
 </ion-content>
 <div class="bar bar-footer bar-positive"">
-		<input type="submit" name="Salvar">
+		<input class = "mybutton"  type="submit" name="Salvar">
 	<div>
 	</form>
 <script id="my-modal.html" type="text/ng-template">

@@ -44,7 +44,7 @@ modle.controller('MenuCtrl' , function ($scope, $ionicModal, $timeout, $state) {
    // Perform the login action when the user submits the login form
   $scope.openReserve = function($scope) {
   
-    $state.go("menu.reserve"); 
+      $state.go("menu.home"); 
    
   };
 });
@@ -67,15 +67,58 @@ modle.controller('HomeCtrl' , function ($scope, $ionicModal, $timeout, $state) {
 });
 
 
-modle.controller('CadastreCtrl' ,  function ($scope) {
+modle.controller('CadastreCtrl' ,  function ($scope ,  UserFactory, $state) {
     var phone = $scope.phone;
+    $scope.style = "border-color:red ;";
     $scope.list = [];
     $scope.cadastre = [];
+    //
     $scope.submit = function(cadastre)
     {
+       if($scope.validation(cadastre)){
+        UserFactory.insert(cadastre.name, cadastre.email, cadastre.phone, cadastre.password);
+         $state.go("menu.reserve"); 
+       }
       //alert($scope.phone);
-      $scope.list.push(cadastre.phone);
+      //$scope.list.push(cadastre.phone);
+       // UserFactory.select(5);
+       //UserFactory.select(6);
+        //$scope.user = User.all();
+        //console.log($scope.user.name);
    };
+
+     $scope.validation = function(cadastre){
+      var validation = true;
+        if(cadastre.name == null || cadastre.name == ""){
+            $scope.styleInputName = "border-color:red;";
+          validation = false;
+        }else{
+            $scope.styleInputName = "";
+        }
+
+        if(cadastre.email == null || cadastre.email == ""){
+            $scope.styleInputEmail = "border-color:red;";
+          validation = false;
+        }else{
+            $scope.styleInputEmail = "";
+        }
+
+        if(cadastre.phone == null || cadastre.phone == ""){
+            $scope.styleInputPhone = "border-color: red;";
+          validation = false;
+        }else{
+            $scope.styleInputPhone = "";
+        }
+
+
+        if(cadastre.password == null || cadastre.password == ""){
+            $scope.styleInputPassword = "border-bottom-color: red;";
+          validation = false;
+        }else{
+            $scope.styleInputPassword = "";
+        }
+        return validation;
+    };
   }
  
 );
@@ -95,4 +138,19 @@ modle.controller('PlaylistsCtrl', function($scope) {
 modle.controller('PlaylistCtrl', function($scope, $stateParams) {
 
 
+});
+
+modle.controller('UserCtrl', function($scope, User, UserFactory) {
+
+        //cadastro dois registros
+  UserFactory.insert('Erik', 'teste@teste', 'qweqweqwe', 'qeqweqwe');
+
+
+        //retorno dois registros
+  UserFactory.select(1);
+  UserFactory.select(2);
+  $scope.user = User.all();
+  $scope.remove = function(chat) {
+    User.remove(chat);
+  };
 });
