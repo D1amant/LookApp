@@ -1,6 +1,6 @@
 var modle = angular.module('starter.controllers', []);
 
-modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state) {
+modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, SectionFactory,$state) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -9,6 +9,10 @@ modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state) {
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
+   var ressult = SectionFactory.select(1);
+   if(ressult != null ){
+          $state.go("menu.home"); 
+   }
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -44,7 +48,7 @@ modle.controller('MenuCtrl' , function ($scope, $ionicModal, $timeout, $state) {
    // Perform the login action when the user submits the login form
   $scope.openReserve = function($scope) {
   
-      $state.go("menu.home"); 
+    $state.go("menu.reserve"); 
    
   };
 });
@@ -67,7 +71,7 @@ modle.controller('HomeCtrl' , function ($scope, $ionicModal, $timeout, $state) {
 });
 
 
-modle.controller('CadastreCtrl' ,  function ($scope ,  UserFactory, $state) {
+modle.controller('CadastreCtrl' ,  function ($scope ,SectionFactory,UserFactory, $state) {
     var phone = $scope.phone;
     $scope.style = "border-color:red ;";
     $scope.list = [];
@@ -76,8 +80,12 @@ modle.controller('CadastreCtrl' ,  function ($scope ,  UserFactory, $state) {
     $scope.submit = function(cadastre)
     {
        if($scope.validation(cadastre)){
-        UserFactory.insert(cadastre.name, cadastre.email, cadastre.phone, cadastre.password);
-         $state.go("menu.reserve"); 
+        var id = UserFactory.insert(cadastre.name, cadastre.email, cadastre.phone, cadastre.password);
+            console.log("idUser : "+id);
+          if(id != null){
+            SectionFactory.insert(UserFactory.serlect(id));
+            $state.go("menu.home");
+           } 
        }
       //alert($scope.phone);
       //$scope.list.push(cadastre.phone);
