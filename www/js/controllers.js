@@ -1,18 +1,52 @@
-var modle = angular.module('starter.controllers', []);
+var modle = angular.module('starter.controllers', ['ionic', 'ngCordova']);
 
-modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, SectionFactory,$state) {
+modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, $cordovaSQLite,$state) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-   var ressult = SectionFactory.select(1);
-   if(ressult != null ){
-          $state.go("menu.home"); 
+      $scope.login = []; 
+    $scope.submit = function(login)
+    {
+      if($scope.validation(login)){
+          console.log(login.email + login.password);
+        try{  
+        var query = "SELECT * FROM section WHERE email = '?' and password = '?'";
+        var values = [login.email , login.password];
+          $cordovaSQLite.execute(db, query, values).then(
+           function(res) {
+            console.log('ROEWS: '+res.rows[0]);
+            if (res.rows.length > 0) 
+            {
+               $state.go("menu.home");
+            }
+           },
+           function(err) {
+            console.log('SQLERROR: '+err);
+            //return null;
+          });
+         }catch(error){
+           console.log(error);
+         }
+     
    }
+ };
+    $scope.validation = function(login){
+      var validation = true;
+      if(login.email == null || login.email == ""){
+        $scope.styleInputEmail = "border-bottom-color: red !important;";
+        validation = false;
+      }else{
+        $scope.styleInputName = "";
+      }
+
+      if(login.password == null || login.password == ""){
+        $scope.styleInputPassword = "border-bottom-color: red !important;";
+        validation = false;
+      }else{
+        $scope.styleInputPassword = "";
+      }
+      return validation;
+    };
+
+
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -44,102 +78,151 @@ modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, SectionFacto
     }, 1000);
   };
 });
-modle.controller('MenuCtrl' , function ($scope, $ionicModal, $timeout, $state) {
+modle.controller('MenuCtrl' , function ($scope, $ionicModal, $timeout, $state ,$cordovaSQLite ,$ionicPlatform ) {
    // Perform the login action when the user submits the login form
-  $scope.openReserve = function($scope) {
-  
+   $scope.openReserve = function($scope) {
+
     $state.go("menu.reserve"); 
-   
+
   };
+    $scope.logout = function(){
+    try{  
+      var query = "DELETE FROM section WHERE id = ?";
+      var values = [1];
+       $cordovaSQLite.execute(db, query, values).then(
+        function(res) {
+           $state.go("app");
+        });
+      }catch(error){
+        console.log(error);
+      }
+    };
 });
 modle.controller('ReserveCtrl' , function ($scope, $ionicModal, $timeout, $state) {
    // Perform the login action when the user submits the login form
-  $ionicModal.fromTemplateUrl('my-modal.html', {
+   $ionicModal.fromTemplateUrl('my-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal;
   });
   
-      $scope.openModal = function() {
-         $scope.modal.show();
-   };
+  $scope.openModal = function() {
+   $scope.modal.show();
+ };
 });
 
-modle.controller('HomeCtrl' , function ($scope, $ionicModal, $timeout, $state) {
+modle.controller('HomeCtrl' , function ($scope, $ionicModal, $timeout, $state,$cordovaSQLite ,$ionicPlatform ) {
+
+
   // body...
 });
 
 
-modle.controller('CadastreCtrl' ,  function ($scope ,SectionFactory,UserFactory, $state) {
-    var phone = $scope.phone;
-    $scope.style = "border-color:red ;";
-    $scope.list = [];
-    $scope.cadastre = [];
+modle.controller('CadastreCtrl' ,  function ($scope , $state ,$cordovaSQLite) 
+{
+  $scope.style = "border-color:red ;";
+  $scope.cadastre = [];
     //
     $scope.submit = function(cadastre)
     {
-       if($scope.validation(cadastre)){
-        var id = UserFactory.insert(cadastre.name, cadastre.email, cadastre.phone, cadastre.password);
-            console.log("idUser : "+id);
-          if(id != null){
-            SectionFactory.insert(UserFactory.serlect(id));
-            $state.go("menu.home");
-           } 
-       }
-      //alert($scope.phone);
-      //$scope.list.push(cadastre.phone);
-       // UserFactory.select(5);
-       //UserFactory.select(6);
-        //$scope.user = User.all();
-        //console.log($scope.user.name);
+     if($scope.validation(cadastre))
+     {
+        $scope.insertUser (cadastre);
+     }
    };
 
-     $scope.validation = function(cadastre){
+
+ $scope.insertUser = function (cadastre ){
+
+       try{  
+        var query = "INSERT INTO user (name, email, phone , password, created_at ,status ) VALUES (?, ?, ?, ? , ?, ?);";
+        var values = [cadastre.name, cadastre.email, cadastre.phone , cadastre.password ,"date('now')" , '1'];
+        resid = null;
+        $cordovaSQLite.execute(db, query, values).then(
+          function(res) {
+            console.log('res :'+res.insertId);
+
+            $scope.insertSection(res.insertId , cadastre);
+          },
+          function(err) {
+            console.log('ERROR: '+err);
+            //return null;
+          }
+          );
+      }catch(error){
+        console.log(error);
+      }
+    };
+
+
+
+ $scope.insertSection = function (id , cadastre ){
+        try{  
+          var query = "INSERT INTO section ( id,idUser , name, email, phone , password , created_at , status) VALUES (?, ?, ?, ? , ?, ? , ? , ?);";
+          var values = ['1', id  , cadastre.name, cadastre.email, cadastre.phone , cadastre.password ,"date('now')" , '1' ];
+  
+        $cordovaSQLite.execute(db, query, values).then(
+          function(res) {
+            console.log('INSERTED ID: '+res);
+            $state.go("menu.home"); 
+          },
+          function(err) {
+            console.log('ERROR: '+err);
+          
+          }
+        );
+      }catch(error){
+        console.log(error);
+      }
+    };
+
+
+    $scope.validation = function(cadastre){
       var validation = true;
-        if(cadastre.name == null || cadastre.name == ""){
-            $scope.styleInputName = "border-color:red;";
-          validation = false;
-        }else{
-            $scope.styleInputName = "";
-        }
+      if(cadastre.name == null || cadastre.name == ""){
+        $scope.styleInputName = "border-color:red;";
+        validation = false;
+      }else{
+        $scope.styleInputName = "";
+      }
 
-        if(cadastre.email == null || cadastre.email == ""){
-            $scope.styleInputEmail = "border-color:red;";
-          validation = false;
-        }else{
-            $scope.styleInputEmail = "";
-        }
+      if(cadastre.email == null || cadastre.email == ""){
+        $scope.styleInputEmail = "border-color:red;";
+        validation = false;
+      }else{
+        $scope.styleInputEmail = "";
+      }
 
-        if(cadastre.phone == null || cadastre.phone == ""){
-            $scope.styleInputPhone = "border-color: red;";
-          validation = false;
-        }else{
-            $scope.styleInputPhone = "";
-        }
+      if(cadastre.phone == null || cadastre.phone == ""){
+        $scope.styleInputPhone = "border-color: red;";
+        validation = false;
+      }else{
+        $scope.styleInputPhone = "";
+      }
 
 
-        if(cadastre.password == null || cadastre.password == ""){
-            $scope.styleInputPassword = "border-bottom-color: red;";
-          validation = false;
-        }else{
-            $scope.styleInputPassword = "";
-        }
-        return validation;
+      if(cadastre.password == null || cadastre.password == ""){
+        $scope.styleInputPassword = "border-bottom-color: red;";
+        validation = false;
+      }else{
+        $scope.styleInputPassword = "";
+      }
+      return validation;
     };
   }
- 
-);
+
+  );
 
 
 modle.controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+  { title: 'Reggae', id: 1 },
+  { title: 'Chill', id: 2 },
+  { title: 'Dubstep', id: 3 },
+  { title: 'Indie', id: 4 },
+  { title: 'Rap', id: 5 },
+  { title: 'Cowbell', id: 6 }
   ];
 });
 
@@ -151,14 +234,14 @@ modle.controller('PlaylistCtrl', function($scope, $stateParams) {
 modle.controller('UserCtrl', function($scope, User, UserFactory) {
 
         //cadastro dois registros
-  UserFactory.insert('Erik', 'teste@teste', 'qweqweqwe', 'qeqweqwe');
+        UserFactory.insert('Erik', 'teste@teste', 'qweqweqwe', 'qeqweqwe');
 
 
         //retorno dois registros
-  UserFactory.select(1);
-  UserFactory.select(2);
-  $scope.user = User.all();
-  $scope.remove = function(chat) {
-    User.remove(chat);
-  };
-});
+        UserFactory.select(1);
+        UserFactory.select(2);
+        $scope.user = User.all();
+        $scope.remove = function(chat) {
+          User.remove(chat);
+        };
+      });

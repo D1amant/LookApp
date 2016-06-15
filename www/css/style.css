@@ -38,9 +38,11 @@
 
 .item
 {
-	border-top: 0px !important;
-	border-botton: 1px !important;
-	margin-bottom: 5px;
+	border-top: 	0px !important;
+	border-left: 	0px !important;
+	border-right:	0px !important;
+	border-botton: 	1px !important;
+	margin-bottom: 	5px;
 
 }
 

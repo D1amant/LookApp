@@ -18,29 +18,28 @@ sqlite.run(function($ionicPlatform, $cordovaSQLite) {
 
 
 
-sqlite.factory('UserFactory', function($cordovaSQLite) {
+sqlite.factory('UserFactory', function($cordovaSQLite ) {
   return {
     insert : function(name, email, phone , password) {
-    	id = null;
-      self = this;
     	try{	
 	    	  var query = "INSERT INTO user (name, email, phone , password, created_at ,status ) VALUES (?, ?, ?, ? , ?, ?);";
 	    	  var values = [name, email, phone , password ,"date('now')" , '1'];
-	
-    	  $cordovaSQLite.execute(db, query, values ).then(
+	         resid = null;
+    	    $cordovaSQLite.execute(db, query, values).then(
     	    function(res) {
     	      console.log('res :'+res.insertId);
-    	      self.id = res.insertId;
+    	      resid = res.insertId;
+            //return resid;
     	    },
     	    function(err) {
     	      console.log('ERROR: '+err);
+    	      //return null;
     	    }
     	  );
   		}catch(error){
   			console.log(error);
   		}
-
-  		  return self.id;
+      return resid;
     },
     select : function(id) {
      try{	
@@ -63,10 +62,9 @@ sqlite.factory('UserFactory', function($cordovaSQLite) {
   			console.log(error);
   		}
     },
-
-     getAll : function(id) {
+    getAll : function(id) {
      try{	
-      var query = "SELECT * FROM user WHERE ";
+      var query = "SELECT * FROM user ";
       var values = [id];
 
       $cordovaSQLite.execute(db, query, values).then(
@@ -83,6 +81,26 @@ sqlite.factory('UserFactory', function($cordovaSQLite) {
       }catch(error){
   			console.log(error);
   		}
+    },
+   getLast: function(id) {
+     try{ 
+      var query = "SELECT * FROM user order by DESC LIMIT 1";
+      var values = [id];
+
+      $cordovaSQLite.execute(db, query, values).then(
+        function(res) {
+          if (res.rows.length > 0) {
+            var result = res.rows;
+          return result;
+          } else {
+            console.log('No records found');
+            return null;
+          }
+        }
+      );
+      }catch(error){
+        console.log(error);
+      }
     }
   };
 
@@ -93,7 +111,7 @@ sqlite.factory('UserFactory', function($cordovaSQLite) {
   return {
     insert : function(obj) {
     	try{	
-	    	  var query = "INSERT INTO user ( id,idUser , name, email, phone , password , created_at , status) VALUES (?, ?, ?, ? , ?, ?);";
+	    	  var query = "INSERT INTO section ( id,idUser , name, email, phone , password , created_at , status) VALUES (?, ?, ?, ? , ?, ?);";
 	    	  var values = ['1', obj.idUser , obj.name, obj.email, obj.phone , obj.password ,"date('now')" , '1' ];
 	
     	  $cordovaSQLite.execute(db, query, values).then(
@@ -133,7 +151,7 @@ sqlite.factory('UserFactory', function($cordovaSQLite) {
     },
 	getAll : function(id) {
      try{	
-      var query = "SELECT * FROM user WHERE ";
+      var query = "SELECT * FROM user ";
       var values = [id];
 
       $cordovaSQLite.execute(db, query, values).then(

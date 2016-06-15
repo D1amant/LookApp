@@ -4,11 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'sqlite']);
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'sqlite']);
 var db = null;
 
 
-app.run(function($ionicPlatform) {
+app.run(function($ionicPlatform ,$cordovaSQLite , $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,7 +21,35 @@ app.run(function($ionicPlatform) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    if (window.cordova){
+      try{
+         db = $cordovaSQLite.openDB({ name: "my.db" });
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS user (id integer primary key AUTOINCREMENT, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS section (id integer primary key, idUser integer, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS reserve (id integer primary key AUTOINCREMENT, idUser integer, id_type_worck integer, date varchar(15),time varchar(15) , status BOOLEAN, deleted BOOLEAN ,created_at varchar(15))");
+     
+           var query = "SELECT * FROM section WHERE id=?";
+       var values = [1];
+  
+    $cordovaSQLite.execute(db, query, values ,  $state).then(
+        function(res) {
+          if (res.rows.length > 0) {
+           $state.go("menu.home");  
+            
+          } else {
+            console.log('No records found');
+            
+          }
+        }
+      );
+      }catch (error) {
+         console.log("sqlite : "+error);
+      }
+    }
   });
+
+  
 });
 
 app.config(function($stateProvider, $urlRouterProvider) {
