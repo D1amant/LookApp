@@ -22,6 +22,7 @@ sqlite.factory('UserFactory', function($cordovaSQLite) {
   return {
     insert : function(name, email, phone , password) {
     	id = null;
+      self = this;
     	try{	
 	    	  var query = "INSERT INTO user (name, email, phone , password, created_at ,status ) VALUES (?, ?, ?, ? , ?, ?);";
 	    	  var values = [name, email, phone , password ,"date('now')" , '1'];
@@ -29,7 +30,7 @@ sqlite.factory('UserFactory', function($cordovaSQLite) {
     	  $cordovaSQLite.execute(db, query, values ).then(
     	    function(res) {
     	      console.log('res :'+res.insertId);
-    	      id = res.insertId;
+    	      self.id = res.insertId;
     	    },
     	    function(err) {
     	      console.log('ERROR: '+err);
@@ -39,7 +40,7 @@ sqlite.factory('UserFactory', function($cordovaSQLite) {
   			console.log(error);
   		}
 
-  		  return id;
+  		  return self.id;
     },
     select : function(id) {
      try{	
