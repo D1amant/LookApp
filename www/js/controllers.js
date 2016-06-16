@@ -1,10 +1,41 @@
 var modle = angular.module('starter.controllers', ['ionic', 'ngCordova']);
 
-modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, $cordovaSQLite,$state) {
+modle.controller('AppCtrl', function($scope, $ionicModal, $timeout, $cordovaSQLite,$state,$http ) {
 
       $scope.login = []; 
     $scope.submit = function(login)
     {
+
+          var headers = {
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Credentials': 'true'
+      };
+
+            // Simple GET request example:
+$http({
+  method: 'GET',
+  url: 'https://viacep.com.br/ws/91240090/json', 
+
+}).success(function(response) {
+    // this callback will be called asynchronously
+    // when the response is available
+          alert(response.cep);
+  }).error( function errorCallback(data, status, headers, config) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    
+          console.log(data);
+          console.log(status);
+          console.log(headers);
+          console.log(config);
+  });
+
+
+
+        $state.go("menu.home");
       if($scope.validation(login)){
           console.log(login.email + login.password);
         try{  

@@ -8,7 +8,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'
 var db = null;
 
 
-app.run(function($ionicPlatform ,$cordovaSQLite , $state) {
+app.run(function($ionicPlatform ,$cordovaSQLite , $state , $http ) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -22,14 +22,20 @@ app.run(function($ionicPlatform ,$cordovaSQLite , $state) {
       StatusBar.styleDefault();
     }
 
+    
+
     if (window.cordova){
       try{
          db = $cordovaSQLite.openDB({ name: "my.db" });
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS user (id integer primary key AUTOINCREMENT, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS section (id integer primary key, idUser integer, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS reserve (id integer primary key AUTOINCREMENT, idUser integer, id_type_worck integer, date varchar(15),time varchar(15) , status BOOLEAN, deleted BOOLEAN ,created_at varchar(15))");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS studio (id integer primary key AUTOINCREMENT, name varchar(255) , description text, phone varchar(255) , address varchar(255) , status BOOLEAN ,created_at varchar(15))");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS task (id integer primary key AUTOINCREMENT, title varchar(255) , created_at varchar(15) , status BOOLEAN");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS studio_task (id integer primary key AUTOINCREMENT, studio_id integer ,task integer , created_at varchar(15) , status BOOLEAN ");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS calendar (id integer primary key AUTOINCREMENT  , studio_id integer , user_id , task_id integer ,  date varchar(15) ,time varchar(255) , created_at varchar(15) , status BOOLEAN ");
      
-           var query = "SELECT * FROM section WHERE id=?";
+       var query = "SELECT * FROM section WHERE id=?";
        var values = [1];
   
     $cordovaSQLite.execute(db, query, values ,  $state).then(
@@ -52,68 +58,73 @@ app.run(function($ionicPlatform ,$cordovaSQLite , $state) {
   
 });
 
-app.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+app.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        $httpProvider.defaults.headers.common = 'Content-Type: application/json';
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+]);
 
-  .state('app', {
+app.config(function($stateProvider, $urlRouterProvider ) {
+  $stateProvider.state('app', {
     url: '/app',
     abstract: false,
     templateUrl: 'templates/login.html',
     controller: 'AppCtrl'
-  })
+  });
 
-  .state('menu', {
+  $stateProvider.state('menu', {
     url: '/menu',
     abstract: false,
     templateUrl: 'templates/menu.html',
     controller: 'MenuCtrl'
-  })
+  });
 
-    .state('cadastre', {
+    $stateProvider.state('cadastre', {
     url: '/cadastre',
     abstract: false,
     templateUrl: 'templates/cadastre.html',
     controller: 'CadastreCtrl'
-  })
+  });
 
-  .state('menu.search', {
+  $stateProvider.state('menu.search', {
     url: '/search',
     views: {
       'menuContent': {
         templateUrl: 'templates/search.html'
       }
     }
-  })
+  });
 
- .state('menu.home', {
+ $stateProvider.state('menu.home', {
     url: '/home',
     views: {
       'menuContent': {
         templateUrl: 'templates/home.html'
       }
     }
-  })
+  });
 
- .state('menu.reserve', {
+ $stateProvider.state('menu.reserve', {
     url: '/reserve',
     views: {
       'menuContent': {
         templateUrl: 'templates/reserve.html'
       }
     }
-  })
+  });
 
 
 
-  .state('app.browse', {
+  $stateProvider.state('app.browse', {
       url: '/browse',
       views: {
         'menuContent': {
           templateUrl: 'templates/browse.html'
         }
       }
-    })
-    .state('app.playlists', {
+    });
+    $stateProvider.state('app.playlists', {
       url: '/playlists',
       views: {
         'menuContent': {
@@ -121,9 +132,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
           controller: 'PlaylistsCtrl'
         }
       }
-    })
+    });
 
-  .state('app.single', {
+  $stateProvider.state('app.single', {
     url: '/playlists/:playlistId',
     views: {
       'menuContent': {
@@ -133,5 +144,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app');
+
 });
