@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'sqlite']);
+var app = angular.module('starter', ['ionic', 'ngCordova']);
 var db = null;
 
 
@@ -70,7 +70,7 @@ app.config(function($stateProvider, $urlRouterProvider ) {
     url: '/app',
     abstract: false,
     templateUrl: 'templates/login.html',
-    controller: 'AppCtrl'
+    controller: 'UserController'
   });
 
   $stateProvider.state('menu', {
@@ -84,7 +84,7 @@ app.config(function($stateProvider, $urlRouterProvider ) {
     url: '/cadastre',
     abstract: false,
     templateUrl: 'templates/cadastre.html',
-    controller: 'CadastreCtrl'
+    controller: 'CadastreController'
   });
 
   $stateProvider.state('menu.search', {
@@ -124,25 +124,7 @@ app.config(function($stateProvider, $urlRouterProvider ) {
         }
       }
     });
-    $stateProvider.state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    });
 
-  $stateProvider.state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app');
 

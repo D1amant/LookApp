@@ -3,26 +3,32 @@
     <h1 class="title">Login</h1>
 
   </ion-header-bar>
-  <ion-content ng-controler='AppCtrl'>
+  <ion-content ng-controler='UserController'>
     <div class="logo">
       <img src="assets/img/logo.png" width="200px" height="200px">
     </div>
-    <form class= "form-login" ng-submit = "submit(login)" >
+    <form class= "form" name="formlogin" >
       <div class="list">
-        <label style="{{styleInputEmail}}"  class="item item-input">
+        <label ng-class= "{'red-border-botton':!formlogin.email.$pristine && formlogin.email.$invalid}" ng-style="expression" class="item item-input">
           <span class="input-label">Email</span>
-          <input  type="email" ng-model="login.email">
+          <input  name ='email' type="email" ng-model="login.email"  ng-required="true"/>
         </label>
-        <label style="{{styleInputPassword}}" class="item item-input">
+        <label style="{{styleInputPassword}}"  class="item item-input">
           <span class="input-label">Senha</span>
-          <input   type="password" ng-model="login.password">
+          <input    name ='password' type="password" ng-model="login.password" ng-required="true" />
         </label>
         <label class="item">
-          <input type="submit" class="button button-block button-positive" value ="Entrar"/>
+          <button  ng-click = "submit(login)"  ng-disabled="formlogin.email.$invalid" type="submit" class="button button-block button-positive" >Entrar</button>
 
         </label>
+       
         <a href="#/cadastre"><p class="text-center link" >Cadastre-se</p></a>
       </div>
+   IInvald   {{ formlogin.email.$invalid }}<br/>
+    Valid {{ formlogin.email.$valid }}<br/>
+     pristine {{ formlogin.email.$pristine }}<br/>
     </form>
+
+
   </ion-content>
 </ion-modal-view>
