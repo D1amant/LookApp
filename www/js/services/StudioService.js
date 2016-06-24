@@ -3,7 +3,7 @@ app.factory("StudioService", function ($http) {
 		return $http.get("http://localhost/json.php");
 	};
 
-	var _saveStudio= function (contato) {
+	var _saveStudio = function (contato) {
 		return $http.post("http://localhost/json.php");
 	};
 

@@ -1,20 +1,35 @@
-app.controller('CadastreController' ,  function ($scope , $state ,$cordovaSQLite) 
+app.controller('CadastreController' ,  function ($scope , $state ,$cordovaSQLite , User) 
 {
   $scope.style = "border-color:red ;";
   $scope.cadastre = [];
+
     //
     $scope.submit = function(cadastre)
     {
-     if($scope.validation(cadastre))
+      $scope.cadastre  = cadastre;
+      var result = User.insertUser($scope.cadastre);
+      result.then(function(result){
+        try{ 
+           var validate = User.insertSection(result.insertId , $scope.cadastre);
+          console.log(validate);
+          if(validate){
+            $state.go("menu.home"); 
+          }
+         }catch(error){
+           console.log(error); 
+         }
+     });
+   
+     /*if($scope.validation(cadastre))
      {
         $scope.insertUser (cadastre);
-     }
+     }*/
    };
 
 
  $scope.insertUser = function (cadastre ){
 
-       try{  
+    /*   try{  
         var query = "INSERT INTO user (name, email, phone , password, created_at ,status ) VALUES (?, ?, ?, ? , ?, ?);";
         var values = [cadastre.name, cadastre.email, cadastre.phone , cadastre.password ,"date('now')" , '1'];
         resid = null;
@@ -31,7 +46,7 @@ app.controller('CadastreController' ,  function ($scope , $state ,$cordovaSQLite
           );
       }catch(error){
         console.log(error);
-      }
+      }*/
     };
 
 
