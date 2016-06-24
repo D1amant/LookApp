@@ -30,11 +30,12 @@ app.run(function($ionicPlatform ,$cordovaSQLite , $state , $http ) {
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS user (id integer primary key AUTOINCREMENT, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS section (id integer primary key, idUser integer, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS reserve (id integer primary key AUTOINCREMENT, idUser integer, id_type_worck integer, date varchar(15),time varchar(15) , status BOOLEAN, deleted BOOLEAN ,created_at varchar(15))");
-         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS studio (id integer primary key AUTOINCREMENT, name varchar(255) , description text, phone varchar(255) , address varchar(255) , status BOOLEAN ,created_at varchar(15))");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS collaborator (id integer primary key AUTOINCREMENT  , studio_id integer , name varchar(50), task_id integer ,  date varchar(15) ,time varchar(255) , created_at varchar(15) , status BOOLEAN ");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS studio (id integer primary key AUTOINCREMENT, name varchar(255))");
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS task (id integer primary key AUTOINCREMENT, title varchar(255) , created_at varchar(15) , status BOOLEAN");
-         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS studio_task (id integer primary key AUTOINCREMENT, studio_id integer ,task integer , created_at varchar(15) , status BOOLEAN ");
-         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS calendar (id integer primary key AUTOINCREMENT  , studio_id integer , user_id , task_id integer ,  date varchar(15) ,time varchar(255) , created_at varchar(15) , status BOOLEAN ");
-     
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS collaborator_task (id integer primary key AUTOINCREMENT, studio_id integer ,task integer , created_at varchar(15) , status BOOLEAN ");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS calendar (id integer primary key AUTOINCREMENT  , studio_id integer , user_id integer, task_id integer ,  date varchar(15) ,time varchar(255) , created_at varchar(15) , status BOOLEAN ");
+         
        var query = "SELECT * FROM section WHERE id=?";
        var values = [1];
   

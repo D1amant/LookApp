@@ -1,6 +1,12 @@
-app.controller('MenuCtrl' , function ($scope, $ionicModal, $timeout, $state ,$cordovaSQLite ,$ionicPlatform ) {
+app.controller('MenuCtrl' , function ($scope, StudioService, $ionicModal, $timeout, $state ,$cordovaSQLite ,$ionicPlatform ) {
    // Perform the login action when the user submits the login form
-   $scope.openReserve = function($scope) {
+ 
+   StudioService.getStudio().success(function (data) {
+      $scope.studios = data;
+      console.log(data);
+    });
+
+    $scope.openReserve = function($scope) {
 
     $state.go("menu.reserve"); 
 

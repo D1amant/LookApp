@@ -4,7 +4,7 @@ app.controller('UserController', function($scope, $ionicModal, $timeout, $cordov
 $scope.submit = function(login)
  {
 
-  
+   $state.go("menu.home");
       if($scope.validation(login)){
           console.log(login.email + login.password);
         try{  
