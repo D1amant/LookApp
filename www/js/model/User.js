@@ -23,8 +23,20 @@ app.factory("User", function ($cordovaSQLite) {
 
       return result ;
     };
+
+   var _selectUser = function (email , password){
+       console.log(email + password);
+       //
+        var query = "SELECT * FROM user WHERE email = ? and password = ?";
+        var values = [email , password];
+        var result =   $cordovaSQLite.execute(db, query, values);
+        console.log(result);
+          return result;
+    };
+
 	return {
 		insertUser: _insertUser,
-		insertSection: _insertSection
+    insertSection: _insertSection,
+		getUser: _selectUser
 	};
 });

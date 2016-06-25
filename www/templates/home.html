@@ -1,14 +1,15 @@
 <ion-view view-title="DayStudio">
 	<ion-content >
-    <div class="list card" ng-click="openReserve()" ng-repeat="studios in studios">
-      <div class="item item-body" ng-click="openReserve()">
-        <img  ng-click="openReserve()" class="full-image" src="{{studios.img}}" width="400px" height="200px">
-        <p><b><h2>studios.name</h2></b><p>
+  <a ng-repeat="studios in studios" ui-sref="menu.reserve({id: studios.id})">
+    <div class="list card" >
+      <div class="item item-body">
+        <img  class="full-image" src="{{studios.img}}" width="400px" height="200px">
+        <p><b><h2>{{studios.name}}</h2></b><p>
           <p>
-           {{studios.descriptions}}
+           {{studios.description}}
           </p>
         </div>
-
       </div>
+      </a>
  </ion-content>
 </ion-view>

@@ -1,18 +1,19 @@
-app.controller('MenuCtrl' , function ($scope, StudioService, $ionicModal, $timeout, $state ,$cordovaSQLite ,$ionicPlatform ) {
+app.controller('MenuCtrl' , function ($scope,Studio ,StudioService, $ionicModal, $timeout, $state ,$cordovaSQLite ,$ionicPlatform ) {
    // Perform the login action when the user submits the login form
- 
- console.log( StudioService.getStudio());
+
    StudioService.getStudio().success(function (data) {
       $scope.studios = data;
       console.log(data);
+      var result = Studio.add(data);
+      console.log(result);
     });
 
-    $scope.openReserve = function($scope) {
+    $scope.openReserve = function(id,$scope) {
+      $state.go("menu.reserve" , {'id':id}); 
+    };
+  
 
-    $state.go("menu.reserve"); 
-
-  };
-    $scope.logout = function(){
+  $scope.logout = function(){
     try{  
       var query = "DELETE FROM section WHERE id = ?";
       var values = [1];

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.diarystudio243010" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>DiaryStudio</name>
+  <name>LookApp</name>
   <description>
-        An Ionic Framework and Cordova project.
+       Projeto para reserva de horarios em salões de beleza.
     </description>
-  <author email="you@example.com" href="http://example.com.com/">
-      Your Name Here
+  <author email="luisbluex@gmail.com" href="http://example.com.com/">
+      Luis Fernando 
     </author>
   <content src="index.html"/>
   <access origin="*"/>

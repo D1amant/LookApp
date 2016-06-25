@@ -1,13 +1,15 @@
-app.controller('ReserveController' , function ($scope, $ionicModal, $timeout, $state) {
+app.controller('ReserveController' , function ($scope, $ionicModal, $timeout, $state, $stateParams , Studio) {
    // Perform the login action when the user submits the login form
-   $ionicModal.fromTemplateUrl('my-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+   
+   	Studio.getStudio($stateParams.id).then(function (res) {
+      $scope.name = res.rows.item(0).name;
+      $scope.phone = res.rows.item(0).phone;
+      $scope.address = res.rows.item(0).address;
   
-  $scope.openModal = function() {
-   $scope.modal.show();
- };
+      console.log(res.rows.item(0).name);
+    });
+
+ 
+
+ 
 });

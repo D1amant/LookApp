@@ -19,57 +19,12 @@ app.controller('CadastreController' ,  function ($scope , $state ,$cordovaSQLite
            console.log(error); 
          }
      });
-   
-     /*if($scope.validation(cadastre))
-     {
-        $scope.insertUser (cadastre);
-     }*/
+  
    };
 
 
- $scope.insertUser = function (cadastre ){
+ 
 
-    /*   try{  
-        var query = "INSERT INTO user (name, email, phone , password, created_at ,status ) VALUES (?, ?, ?, ? , ?, ?);";
-        var values = [cadastre.name, cadastre.email, cadastre.phone , cadastre.password ,"date('now')" , '1'];
-        resid = null;
-        $cordovaSQLite.execute(db, query, values).then(
-          function(res) {
-            console.log('res :'+res.insertId);
-
-            $scope.insertSection(res.insertId , cadastre);
-          },
-          function(err) {
-            console.log('ERROR: '+err);
-            //return null;
-          }
-          );
-      }catch(error){
-        console.log(error);
-      }*/
-    };
-
-
-
- $scope.insertSection = function (id , cadastre ){
-        try{  
-          var query = "INSERT INTO section ( id,idUser , name, email, phone , password , created_at , status) VALUES (?, ?, ?, ? , ?, ? , ? , ?);";
-          var values = ['1', id  , cadastre.name, cadastre.email, cadastre.phone , cadastre.password ,"date('now')" , '1' ];
-  
-        $cordovaSQLite.execute(db, query, values).then(
-          function(res) {
-            console.log('INSERTED ID: '+res);
-            $state.go("menu.home"); 
-          },
-          function(err) {
-            console.log('ERROR: '+err);
-          
-          }
-        );
-      }catch(error){
-        console.log(error);
-      }
-    };
 
 
     $scope.validation = function(cadastre){

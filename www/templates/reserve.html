@@ -1,69 +1,40 @@
-<ion-view view-title="Reservas" ng-controller ='ReserveController'>
-	<ion-content>
+<ion-view view-title="Reservas" >
+	<ion-content ng-controller ="ReserveController">
 		<div class= 'info-reserve'>
-			<h3>Nome do Estabelecimento</h3>	
+			<h3>{{name}}</h3>	
 			<i class = 'ion-ios-home-outline'></i>
-			Rua Waldomiro de sousa , 64<br/> 
+			{{address}}<br/> 
 			<i class = 'ion-ios-location-outline'></i>		
-			51- 3333-3333 		
+			{{phone}} 		
 		</div>	
-		<div class="list">
+		<form name ="reserveForm" class="list">
 			
-			<label class="item item-input">
-				<input type="date" name ='date' id='date' placeholder="Data">
+			<label ng-class= "{'red-border-botton':!reserveForm.date.$pristine && reserveForm.date.$invalid}" class="item item-input">
+			 <div class="input-label">data</div>
+				<input  type="date" name ='date' id='date' placeholder="Data" ng-required = "true" ng-model="date"/>
 			</label>
-			<label class="item item-input">
-				<input type="time" name ='time' id='time' placeholder="hora">
+			<label ng-class= "{'red-border-botton':!reserveForm.time.$pristine && reserveForm.time.$invalid}"  class="item item-input">
+				 <div class="input-label">hora</div>
+				<input  type="time" name ='time' id='time' placeholder="hora" ng-required = "true" ng-model="time"/>
 			</label>
 
- 		<label class="item item-input item-select">
+ 		<label class="item item-input item-select" >
  		   <div class="input-label">
- 		     Prificioal
+ 		     Proficional
  		   </div>
- 		   <select>
-				<option>Pedrinho</option>
-				<option>Maria</option>
-				<option>Patric</option>
-				<option>Paola</option>
+ 		   <select name="collaborator_id" ng-model="collaborator_id">
+				<option>Pedrinho - CAB</option>
+				<option>Maria - CAB</option>
+				<option>Patric - MANI</option>
+				<option>Paola - MASS</option>
+				<option>Paola - DEP</option>
 		 	</select>
  		 </label>
 		</div>
-	</div>
-
- 		<label class="item item-input item-select">
- 		   <div class="input-label">
- 		     Serviço
- 		   </div>
- 		   <select>
-				<option>Corte Maquina</option>
-				<option>Corte Tesoura</option>
-				<option>Progreciva</option>
-				<option>Manicure</option>
-		 	</select>
- 		 </label>
-		</div>
-	</div>
-
-
+	</form>
 </ion-content>
-	<div class="bar bar-footer bar-positive"">
-	  <div class="title" ng-click="openModal()">Salvar</div>
-	
-	<div>
-<script id="my-modal.html" type="text/ng-template">
-  <ion-modal-view>
-    <ion-header-bar class="bar bar-positive">
-     <h1 class="title">Parabéns </h1>
-    <button class="button button-clear button-primary" ng-click="modal.hide()">Ok</button>
-   
-    </ion-header-bar>
-    <ion-content>
-    <br/>
-    <br/>
-
-       <h1 class="title">Dados Salvos com Sucesso </h1>
-    </ion-content>
-  </ion-modal-view>
-</script>
+	<div class="bar bar-footer">
+	      <button ng-click = "submit(login)"  ng-disabled="reserveForm.$invalid" class="button button-block button-positive" >Ok</button>	
+	</div>      
 </ion-view>
 
