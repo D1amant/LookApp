@@ -11,7 +11,7 @@ app.controller('CadastreController' ,  function ($scope , $state ,$cordovaSQLite
       result.then(function(result){
         try{ 
            var validate = User.insertSection(result.insertId , $scope.cadastre);
-          console.log(validate);
+       
           if(validate){
             $state.go("menu.home"); 
           }

@@ -1,40 +1,44 @@
 <ion-view view-title="Reservas" >
-	<ion-content ng-controller ="ReserveController">
+ <ion-header-bar class="bar bar-positive">
+    <button class="button button-clear button-primary" ng-click="$ionicGoBack()"><i class = "ion-chevron-left"></i></button>
+     <h1 class="title">Reservar</h1>
+   
+    </ion-header-bar>
+	<form name ="reserveForm"  ng-controller ="ReserveController" >
+	<ion-content >
 		<div class= 'info-reserve'>
-			<h3>{{name}}</h3>	
+			<h3>{{studio.name}}</h3>	
 			<i class = 'ion-ios-home-outline'></i>
-			{{address}}<br/> 
+			{{studio.address}}<br/> 
 			<i class = 'ion-ios-location-outline'></i>		
-			{{phone}} 		
+			{{studio.phone}} 		
 		</div>	
-		<form name ="reserveForm" class="list">
+		<div class="list">
 			
 			<label ng-class= "{'red-border-botton':!reserveForm.date.$pristine && reserveForm.date.$invalid}" class="item item-input">
 			 <div class="input-label">data</div>
-				<input  type="date" name ='date' id='date' placeholder="Data" ng-required = "true" ng-model="date"/>
+				<input  type="date" name ="date" ng-model="reserve.date" ng-required = "true" />
 			</label>
-			<label ng-class= "{'red-border-botton':!reserveForm.time.$pristine && reserveForm.time.$invalid}"  class="item item-input">
+			<label ng-class= "{'red-border-botton':!reserveForm.time.$pristine && reserveForm.time.$invalid}"   class="item item-input">
 				 <div class="input-label">hora</div>
-				<input  type="time" name ='time' id='time' placeholder="hora" ng-required = "true" ng-model="time"/>
+				<input  type="time" name ="time" ng-model="reserve.time" ng-required = "true" />
 			</label>
 
- 		<label class="item item-input item-select" >
+ 		<label class="item item-input item-select">
  		   <div class="input-label">
  		     Proficional
  		   </div>
- 		   <select name="collaborator_id" ng-model="collaborator_id">
-				<option>Pedrinho - CAB</option>
-				<option>Maria - CAB</option>
-				<option>Patric - MANI</option>
-				<option>Paola - MASS</option>
-				<option>Paola - DEP</option>
+ 		   <select name="collaborator" ng-model="reserve.collaborator" ng-options="collaborator for collaborator in studio.collaborator" ng-required ="true">
+				
 		 	</select>
  		 </label>
 		</div>
-	</form>
+	</div>
+
 </ion-content>
 	<div class="bar bar-footer">
-	      <button ng-click = "submit(login)"  ng-disabled="reserveForm.$invalid" class="button button-block button-positive" >Ok</button>	
-	</div>      
+	      <button ng-click = "submit(reserve)"  ng-disabled="reserveForm.$invalid" class="button button-positive mybutton" >Ok</button>	
+	</div> 
+</form>     
 </ion-view>
 

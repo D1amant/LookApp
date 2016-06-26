@@ -3,13 +3,13 @@ app.controller('MenuCtrl' , function ($scope,Studio ,StudioService, $ionicModal,
 
    StudioService.getStudio().success(function (data) {
       $scope.studios = data;
-      console.log(data);
+     
       var result = Studio.add(data);
-      console.log(result);
+   
     });
 
     $scope.openReserve = function(id,$scope) {
-      $state.go("menu.reserve" , {'id':id}); 
+      $state.go("reserve" , {'id':id}); 
     };
   
 

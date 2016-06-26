@@ -1,6 +1,6 @@
-<ion-view view-title="DayStudio">
+<ion-view view-title="LookApp">
 	<ion-content >
-  <a ng-repeat="studios in studios" ui-sref="menu.reserve({id: studios.id})">
+  <a ng-repeat="studios in studios" ui-sref="reserve({id: studios.id})">
     <div class="list card" >
       <div class="item item-body">
         <img  class="full-image" src="{{studios.img}}" width="400px" height="200px">
