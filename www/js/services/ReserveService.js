@@ -13,7 +13,7 @@ app.factory("ReserveService", function ($http) {
 	var _saveReserve = function (data) {
 		
 	
-		return $http.post("http://192.168.0.14/jsonPost.php", {'date' : data.date ,'time' : data.time , 'idUser' : data.idUser , 'collaborator' : data.collaborator } ,config);
+		return $http.post("http://192.168.0.14/jsonPost.php", {'date' : data.date ,'time' : data.time , 'user_id' : data.user_id , 'collaborator' : data.collaborator } ,config);
 	};
 
 	return {

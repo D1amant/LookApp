@@ -3,7 +3,7 @@ app.factory("User", function ($cordovaSQLite) {
 	var _insertSection = function (id , cadastre ){
         var validation = true ;
         try{  
-          var query = "INSERT INTO section ( id,idUser , name, email, phone , password , created_at , status) VALUES (?, ?, ?, ? , ?, ? , ? , ?);";
+          var query = "INSERT INTO section ( id,user_id , name, email, phone , password , created_at , status) VALUES (?, ?, ?, ? , ?, ? , ? , ?);";
           var values = ['1', id  , cadastre.name, cadastre.email, cadastre.phone , cadastre.password ,"date('now')" , '1' ];
   		  var result =  $cordovaSQLite.execute(db, query, values);
 		 

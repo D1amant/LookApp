@@ -38,9 +38,9 @@ app.run(function($ionicPlatform ,$cordovaSQLite , $state , $http ) {
       try{
     
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS user (id integer primary key AUTOINCREMENT, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
-         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS section (id integer primary key, idUser integer, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS section (id integer primary key, user_id integer, name varchar(100), email varchar(45),phone varchar(20) , password varchar(255) , status BOOLEAN ,created_at varchar(15))");
          $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS studio (id integer primary key , name varchar(255), phone varchar(20) ,descriptio text,address varchar(255) , img varchar(255), collaborator varchar(255) ,created_ad varchar(15) ,status BOOLEAN )");
-         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS reserve (id integer primary key AUTOINCREMENT, idUser integer,  date varchar(15),time varchar(15) , status BOOLEAN, deleted BOOLEAN ,created_at varchar(15))");
+         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS reserve (id integer primary key AUTOINCREMENT, user_id integer,  studio_id integer, collaborator_id integer , date varchar(15),time varchar(15) , status BOOLEAN, deleted BOOLEAN ,created_at varchar(15))");
          //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS calendar (id integer primary key AUTOINCREMENT  , studio_id integer , user_id integer, task_id integer ,  date varchar(15) ,time varchar(255) , created_at varchar(15) , status BOOLEAN ");
          
      

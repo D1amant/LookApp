@@ -4,8 +4,8 @@ app.factory("Reserve", function ($cordovaSQLite) {
       var validate =  true;
       try{
 
-          var query = "INSERT INTO reserve (date , time, collaborator , idUser , deleted , created_at ,status) VALUES  (?,?, ?, ?, ?, ? , ?);";
-          var values = [data.date ,data.time, data.collaborator, data.idUser, '0'  ,"date('now')" , '1'];
+          var query = "INSERT INTO reserve (date , time, collaborator , user_id , deleted , created_at ,status) VALUES  (?,?, ?, ?, ?, ? , ?);";
+          var values = [data.date ,data.time, data.collaborator, data.user_id, '0'  ,"date('now')" , '1'];
           $cordovaSQLite.execute(db, query, values);
         
        }catch(error)
